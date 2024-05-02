@@ -12,9 +12,9 @@ import com.bumptech.glide.Glide
 import com.example.musicapp.R
 import com.example.musicapp.model.Album
 
-class RecyclerViewAdapter:
+class RecyclerViewAdapter(private var albumes: List<Album>):
     RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>() {
-    var albumes: MutableList<Album> = ArrayList()
+    //var albumes: MutableList<Album> = ArrayList()
     lateinit var context: Context
     lateinit var miListener: onItemClickListener
 
@@ -32,6 +32,8 @@ class RecyclerViewAdapter:
                 albumFecha.text = album.fecha
                 albumFoto.loadImage(album.imagen)
             }
+
+
             fun ImageView.loadImage(url:String){
                 Glide.with(context).load(url).into(this)
             }
@@ -58,6 +60,10 @@ class RecyclerViewAdapter:
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = albumes.get(position)
         holder.bind(item,context)
+    }
+    fun actualizarLista(albumesList: MutableList<Album>){
+        this.albumes = albumesList
+        notifyDataSetChanged()
     }
 
     interface onItemClickListener{
